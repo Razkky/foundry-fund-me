@@ -6,11 +6,8 @@ import {FundMe} from "../src/FundMe.sol";
 import {Script, console} from "forge-std/Script.sol";
 // import {Dev}
 
-
 contract FundFundme is Script {
-
     uint256 constant SEND_VALUE = 0.1 ether; // 0.1 ETH
-
 
     function fundFundme(address mostRecentFundme) public {
         vm.startBroadcast();

@@ -2,8 +2,8 @@
 
 pragma solidity ^0.8.18;
 
-import { Test, console } from "forge-std/Test.sol";
-import { FundMe } from "../../src/FundMe.sol";
+import {Test, console} from "forge-std/Test.sol";
+import {FundMe} from "../../src/FundMe.sol";
 import {DeployFundMe} from "../../script/DeployFundMe.s.sol";
 
 contract FundMeTest is Test {
@@ -29,7 +29,7 @@ contract FundMeTest is Test {
     //     assertEq(fundMe.i_owner(), address(this));
     // }
 
-    function testPriceFeedVersion() view public {
+    function testPriceFeedVersion() public view {
         uint256 version = fundMe.getVersion();
         assertEq(version, 4); // Assuming the version is 4, change it if needed
     }
@@ -45,13 +45,14 @@ contract FundMeTest is Test {
         vm.prank(USER);
         fundMe.fund{value: SEND_VALUE}();
         _;
-    } 
+    }
+
     function test_FundUpdatesFundedDataStructure() public funded {
         uint256 amountFunded = fundMe.getAddressToAmountFunded(USER);
         assertEq(amountFunded, SEND_VALUE);
     }
 
-    function testAddsFundersToArray() public  funded{
+    function testAddsFundersToArray() public funded {
         address funder = fundMe.getFunder(0);
         assertEq(funder, USER);
     }
@@ -76,18 +77,15 @@ contract FundMeTest is Test {
         uint256 endingFundeMeBalance = fundMe.getBalance();
 
         assertEq(endingFundeMeBalance, 0);
-        assertEq(
-            endingOwnerBalance,
-            startingOwnerBalance + startingFundeMeBalance
-        );
+        assertEq(endingOwnerBalance, startingOwnerBalance + startingFundeMeBalance);
     }
 
     function testWithdrawalFromMultipleFunders() public funded {
         // Arrange
         uint256 numberOfFunders = 10;
-        uint160 startFunderIndex = 1; 
+        uint160 startFunderIndex = 1;
         for (uint160 i = startFunderIndex; i < numberOfFunders; i++) {
-            hoax(address(i), SEND_VALUE); 
+            hoax(address(i), SEND_VALUE);
             fundMe.fund{value: SEND_VALUE}();
         }
 
@@ -103,10 +101,6 @@ contract FundMeTest is Test {
         uint256 endingFundeMeBalance = fundMe.getBalance();
 
         assertEq(endingFundeMeBalance, 0);
-        assertEq(
-            endingOwnerBalance,
-            startingOwnerBalance + startingFundeMeBalance
-        );
+        assertEq(endingOwnerBalance, startingOwnerBalance + startingFundeMeBalance);
     }
-
 }

@@ -78,7 +78,6 @@ contract FundMe {
         fund();
     }
 
-
     function getAddressToAmountFunded(address funder) external view returns (uint256) {
         return s_addressToAmountFunded[funder];
     }
@@ -94,7 +93,6 @@ contract FundMe {
     function getBalance() external view returns (uint256) {
         return address(this).balance;
     }
-
 }
 
 // Concepts we didn't cover yet (will cover in later sections)

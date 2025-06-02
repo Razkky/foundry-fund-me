@@ -2,13 +2,11 @@
 
 pragma solidity ^0.8.18;
 
-import { Script } from "forge-std/Script.sol";
+import {Script} from "forge-std/Script.sol";
 
 import {MockV3Aggregator} from "../test/mocks/MockV3Aggregator.sol";
 
 contract HelperConfig is Script {
-
-
     NetWorkConfig public activeNetworkConfig;
 
     uint8 public constant DECIMALS = 8;
@@ -19,7 +17,8 @@ contract HelperConfig is Script {
     }
 
     constructor() {
-        if (block.chainid == 11155111) { // Sepolia testnet chain ID
+        if (block.chainid == 11155111) {
+            // Sepolia testnet chain ID
             activeNetworkConfig = getSepoliaEthConfig();
         } else {
             activeNetworkConfig = getOrCreateAnvilConfig();
